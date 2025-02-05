@@ -12,10 +12,65 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Mostrar mensaje personalizado en el footer
-function mostrar_mensaje_personalizado() {
-    echo '<p style="text-align: center; color: #555; margin-top: 20px;">Este es un mensaje de mi plugin personalizado.</p>';
+function mi_plugin_personalizado_estilos()
+{
+    wp_enqueue_style(
+        'mi-plugin-estilos',
+        plugins_url('assets/css/custom.css', __FILE__)
+    );
+}
+add_action('wp_enqueue_scripts', 'mi_plugin_personalizado_estilos');
+
+function mi_plugin_agregar_menu()
+{
+    add_menu_page(
+        'Configuración Instagram Feed', // Título de la página en la parte de arriba
+        'Instagram Feed',               // Título del menú
+        'manage_options',               // Permiso
+        'mi_plugin_config',             // Slug
+        'mi_plugin_configuracion_html', // Función que mostrará el contenido
+        'dashicons-instagram',          // Icono del menú
+        81                              // Posición en el menú
+    );
 }
 
-// Hook para agregar el contenido en el footer
-add_action('wp_footer', 'mostrar_mensaje_personalizado');
+add_action('admin_menu', 'mi_plugin_agregar_menu');
+
+function mi_plugin_configuracion_html()
+{
+
+
+    if (isset($_POST['submit'])) {
+        update_option('value1', sanitize_text_field($_POST['value1']));
+        update_option('value2', sanitize_text_field($_POST['value2']));
+        echo '<div class="updated"><p>Configuración guardada.</p></div>';
+    }
+
+    $value1 = get_option('value1', '');
+    $value2 = get_option('value2', '');
+
+   
+
+    echo "valores guardados " . $value1 . ", " . $value2;
+
+?>
+
+    <div class="wrap">
+        <h1>Configuración Instagram Feed</h1>
+        <form method="POST">
+            <table class="form-table">
+                <tr>
+                    <th scope="row">Valor 1</th>
+                    <td><input type="text" name="value1" value="" placeholder="Input1" /></td>
+                </tr>
+                <tr>
+                    <th scope="row">Valor 2</th>
+                    <td><input type="text" name="value2" value="" placeholder="Input 2" /></td>
+                </tr>
+            </table>
+            <?php submit_button(); ?>
+        </form>
+    </div>
+
+<?php
+}
