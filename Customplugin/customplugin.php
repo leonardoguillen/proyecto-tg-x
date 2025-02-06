@@ -51,8 +51,6 @@ function mi_plugin_configuracion_html()
 
    
 
-    echo "valores guardados " . $value1 . ", " . $value2;
-
 ?>
 
     <div class="wrap">
@@ -61,11 +59,11 @@ function mi_plugin_configuracion_html()
             <table class="form-table">
                 <tr>
                     <th scope="row">Valor 1</th>
-                    <td><input type="text" name="value1" value="" placeholder="Input1" /></td>
+                    <td><input type="text" name="value1" value="<?php echo $value1; ?>" placeholder="Input1" /></td>
                 </tr>
                 <tr>
                     <th scope="row">Valor 2</th>
-                    <td><input type="text" name="value2" value="" placeholder="Input 2" /></td>
+                    <td><input type="text" name="value2" value="<?php echo $value2; ?>" placeholder="Input 2" /></td>
                 </tr>
             </table>
             <?php submit_button(); ?>
