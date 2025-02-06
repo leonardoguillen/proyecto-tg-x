@@ -38,8 +38,6 @@ add_action('admin_menu', 'mi_plugin_agregar_menu');
 
 function mi_plugin_configuracion_html()
 {
-
-
     if (isset($_POST['submit'])) {
         update_option('value1', sanitize_text_field($_POST['value1']));
         update_option('value2', sanitize_text_field($_POST['value2']));
@@ -72,3 +70,19 @@ function mi_plugin_configuracion_html()
 
 <?php
 }
+
+function get_info_settings()
+{
+    $value1 = get_option('value1', '');
+    $value2 = get_option('value2', '');
+    $output = '<div class="instagram-feed">';
+    $output .= '<h1>' . $value1 . '</h1>';
+    $output .= '<h1>' . $value2 . '</h1>';
+
+    
+    $output .= '</div>';
+
+    return $output;
+}
+
+add_shortcode('settings_plugin', 'get_info_settings');
